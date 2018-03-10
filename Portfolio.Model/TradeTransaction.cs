@@ -28,6 +28,19 @@ namespace Portfolio.Model
             Fees = fees;
             Total = total;
         }
+
+        internal override void GenerateSummary(ref PortfolioSummary summary)
+        {
+            switch (Type)
+            {
+                case TradeTypes.Buy:
+                    summary.AddHolding(Date, Units, Total);
+                    break;
+                case TradeTypes.Sell:
+                    summary.SellHolding(Date, Units, Total);
+                    break;
+            }
+        }
     }
 
 }

@@ -14,5 +14,10 @@ namespace Portfolio.Model
             Date = date;
             Code = code;
         }
+
+        internal virtual void GenerateSummary(ref PortfolioSummary summary)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
