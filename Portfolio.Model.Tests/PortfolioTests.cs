@@ -56,17 +56,16 @@ namespace Portfolio.Model.Tests
         public void CanSellTrade()
         {
             var portfolio = new Portfolio("Test");
-            portfolio.AddTransaction(new TradeTransaction(DateTime.Today.AddMonths(-10), "ABC", TradeTypes.Buy, 123, 20M, 2000M));
             portfolio.AddTransaction(new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Sell, 123, 20M, 2200M));
 
-            Assert.AreEqual(2, portfolio.Transactions.Count());
+            Assert.AreEqual(1, portfolio.Transactions.Count());
             Assert.AreEqual(1, portfolio.Summaries.Count());
             var summ = portfolio.Summaries.First();
             Assert.AreEqual("ABC", summ.Code);
-            Assert.AreEqual(0, summ.Units);
-            Assert.AreEqual(0M, summ.Cost);
+            Assert.AreEqual(-123, summ.Units);
+            Assert.AreEqual(-2200M, summ.Cost);
             Assert.AreEqual(0M, summ.DiscountedRealisedGain);
-            Assert.AreEqual(200M, summ.RealisedGain);
+            Assert.AreEqual(0M, summ.RealisedGain);
         }
 
         [TestMethod]
@@ -199,6 +198,25 @@ namespace Portfolio.Model.Tests
             Assert.AreEqual(750M, summ.Cost);
             Assert.AreEqual(1000M, summ.DiscountedRealisedGain);
             Assert.AreEqual(250M, summ.RealisedGain);
+        }
+
+        [TestMethod]
+        public void CanSellTradeThenBuy()
+        {
+            var portfolio = new Portfolio("Test");
+            portfolio.AddTransactions(new List<Transaction> {
+                new TradeTransaction(DateTime.Today.AddDays(-5), "ABC", TradeTypes.Sell, 50, 20M, 600M),
+                new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Buy, 100, 20M, 1000M)
+            });
+
+            Assert.AreEqual(2, portfolio.Transactions.Count());
+            Assert.AreEqual(1, portfolio.Summaries.Count());
+            var summ = portfolio.Summaries.First();
+            Assert.AreEqual("ABC", summ.Code);
+            Assert.AreEqual(50, summ.Units);
+            Assert.AreEqual(500M, summ.Cost);
+            Assert.AreEqual(0M, summ.DiscountedRealisedGain);
+            Assert.AreEqual(100M, summ.RealisedGain);
         }
     }
 }

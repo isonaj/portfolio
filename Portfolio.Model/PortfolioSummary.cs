@@ -31,42 +31,86 @@ namespace Portfolio.Model
 
         public IEnumerable<MatchedTrade> Trades { get { return _trades; } }
 
-        public void AddHolding(DateTime date, int units, decimal cost)
+        public void AddHolding(DateTime date, int units, decimal amount)
         {
-            _holdings.Add(new SummaryHolding(date, units, cost));
+            if (Units >= 0)
+                _holdings.Add(new SummaryHolding(date, units, amount));
+            else
+            {
+                var newHold = new List<SummaryHolding>();
+                foreach (var h in _holdings)
+                {
+                    int tmpUnits;
+                    decimal tmpCost;
+                    if (units >= -h.Units)
+                    {
+                        // Sell all of the holdings
+                        tmpUnits = -h.Units;
+                        tmpCost = -h.Cost;
+                    }
+                    else
+                    {
+                        // Partial sell
+                        tmpUnits = units;
+                        tmpCost = h.Cost * units / -h.Units;
+                        newHold.Add(new SummaryHolding(h.Date, units - h.Units, tmpCost - h.Cost));
+                    }
+
+                    if (tmpUnits > 0)
+                    {
+                        var tmpAmount = tmpUnits * amount / units;
+                        _trades.Add(new MatchedTrade(Code, tmpUnits, date, tmpAmount, h.Date, tmpCost));
+                        amount -= tmpAmount;
+                    }
+
+                    units -= tmpUnits;
+                }
+                if (units > 0)
+                    newHold.Add(new SummaryHolding(date, units, amount));
+
+                _holdings = newHold;
+            }
         }
 
         public void SellHolding(DateTime date, int units, decimal amount)
         {
-            var newHold = new List<SummaryHolding>();
-            foreach (var h in _holdings)
+            if (Units < 0)
+                _holdings.Add(new SummaryHolding(date, -units, -amount));
+            else
             {
-                int tmpUnits;
-                decimal tmpCost;
-                if (units >= h.Units)
+                var newHold = new List<SummaryHolding>();
+                foreach (var h in _holdings)
                 {
-                    // Sell all of the holdings
-                    tmpUnits = h.Units;
-                    tmpCost = h.Cost;
-                }
-                else
-                {
-                    // Partial sell
-                    tmpUnits = units;
-                    tmpCost = h.Cost * units / h.Units;
-                    newHold.Add(new SummaryHolding(h.Date, h.Units - units, h.Cost - tmpCost));
-                }
+                    int tmpUnits;
+                    decimal tmpCost;
+                    if (units >= h.Units)
+                    {
+                        // Sell all of the holdings
+                        tmpUnits = h.Units;
+                        tmpCost = h.Cost;
+                    }
+                    else
+                    {
+                        // Partial sell
+                        tmpUnits = units;
+                        tmpCost = h.Cost * units / h.Units;
+                        newHold.Add(new SummaryHolding(h.Date, h.Units - units, h.Cost - tmpCost));
+                    }
 
-                if (tmpUnits > 0)
-                {
-                    var tmpAmount = tmpUnits * amount / units;
-                    _trades.Add(new MatchedTrade(Code, tmpUnits, h.Date, tmpCost, date, tmpAmount));
-                    amount -= tmpAmount;
-                }
+                    if (tmpUnits > 0)
+                    {
+                        var tmpAmount = tmpUnits * amount / units;
+                        _trades.Add(new MatchedTrade(Code, tmpUnits, h.Date, tmpCost, date, tmpAmount));
+                        amount -= tmpAmount;
+                    }
 
-                units -= tmpUnits;
+                    units -= tmpUnits;
+                }
+                if (units > 0)
+                    newHold.Add(new SummaryHolding(date, -units, -amount));
+
+                _holdings = newHold;
             }
-            _holdings = newHold;
         }
     }
 }
