@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
 namespace Portfolio.Model
 {
-    public class Portfolio : IEntity<Guid>
+    public class Portfolio : Entity
     {
+        [Key]
+        public Guid Id { get; private set; }
+
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; private set; }
 
         private List<Transaction> _txns = new List<Transaction>();
         public IEnumerable<Transaction> Transactions { get { return _txns; } }
         private List<PortfolioSummary> _summaries = new List<PortfolioSummary>();
         public IEnumerable<PortfolioSummary> Summaries {  get { return _summaries; } }
+
+        public Portfolio() { }
         public Portfolio(string name)
         {
             Name = name;

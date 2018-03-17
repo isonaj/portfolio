@@ -4,8 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Portfolio.Data;
+using Portfolio.Data.Repositories;
+using Portfolio.Model.Repositories;
 
 namespace Portfolio.Web
 {
@@ -22,6 +26,10 @@ namespace Portfolio.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddDbContext<PortfolioDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped(typeof(IRepository<Model.Portfolio>), typeof(PortfolioRepository)); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

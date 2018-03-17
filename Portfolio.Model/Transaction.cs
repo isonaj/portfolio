@@ -4,6 +4,8 @@ namespace Portfolio.Model
 {
     public class Transaction
     {
+        public long Id { get; private set; }
+        public Guid PortfolioId { get; private set; }
         public DateTime Date { get; private set; }
         public string Code { get; private set; }
         //public string Units { get; }

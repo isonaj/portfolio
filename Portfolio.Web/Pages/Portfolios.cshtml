@@ -1,0 +1,15 @@
+﻿@page
+@model Portfolio.Web.Pages.PortfoliosModel
+@{
+    ViewData["Title"] = "Portfolios";
+}
+
+<h2>Portfolios</h2>
+
+@foreach (var portfolio in Model.Portfolios)
+{
+    <div>
+        @portfolio.Name
+    </div>
+}
+
