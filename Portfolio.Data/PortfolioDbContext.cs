@@ -12,6 +12,7 @@ namespace Portfolio.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Model.Portfolio>().HasKey(o => o.Id);
             modelBuilder.Entity<Model.Portfolio>().Ignore(o => o.Summaries);
         }
     }

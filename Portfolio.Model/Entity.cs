@@ -5,8 +5,13 @@ using System.Text;
 
 namespace Portfolio.Model
 {
-    public class Entity
+    public abstract class Entity
     {
         public Guid Id { get; private set; }
+
+        public Entity(Guid id)
+        {
+            Id = id;
+        }
     }
 }

@@ -8,9 +8,6 @@ namespace Portfolio.Model
 {
     public class Portfolio : Entity
     {
-        [Key]
-        public Guid Id { get; private set; }
-
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; private set; }
 
@@ -19,8 +16,9 @@ namespace Portfolio.Model
         private List<PortfolioSummary> _summaries = new List<PortfolioSummary>();
         public IEnumerable<PortfolioSummary> Summaries {  get { return _summaries; } }
 
-        public Portfolio() { }
-        public Portfolio(string name)
+        // for EF
+        public Portfolio() : base(Guid.NewGuid()) { }
+        public Portfolio(Guid id, string name) : base(id)
         {
             Name = name;
         }

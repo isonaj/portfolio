@@ -12,7 +12,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanCreatePortfolio()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
 
             Assert.AreEqual("Test", portfolio.Name);
         }
@@ -20,7 +20,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanBuyTrade()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransaction(new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Buy, 123, 20M, 2000M));
 
             Assert.AreEqual(1, portfolio.Transactions.Count());
@@ -36,7 +36,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanBuyTrades()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransactions(new List<Transaction> {
                 new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Buy, 50, 20M, 1000M),
                 new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Buy, 50, 20M, 2000M)
@@ -55,7 +55,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellTrade()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransaction(new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Sell, 123, 20M, 2200M));
 
             Assert.AreEqual(1, portfolio.Transactions.Count());
@@ -71,7 +71,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellTradeReverseOrder()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransactions(new List<Transaction>{
                 new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Sell, 123, 20M, 2200M),
                 new TradeTransaction(DateTime.Today.AddMonths(-10), "ABC", TradeTypes.Buy, 123, 20M, 2000M)
@@ -90,7 +90,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellTradePartial()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransaction(new TradeTransaction(DateTime.Today.AddMonths(-10), "ABC", TradeTypes.Buy, 100, 20M, 2000M));
             portfolio.AddTransaction(new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Sell, 50, 20M, 1100M));
 
@@ -107,7 +107,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellFIFOLess()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransactions(new List<Transaction> {
                 new TradeTransaction(DateTime.Today.AddMonths(-10), "ABC", TradeTypes.Buy, 50, 20M, 1000M),
                 new TradeTransaction(DateTime.Today.AddMonths(-9), "ABC", TradeTypes.Buy, 50, 20M, 2000M),
@@ -126,7 +126,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellFIFOMore()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransactions(new List<Transaction> {
                 new TradeTransaction(DateTime.Today.AddMonths(-10), "ABC", TradeTypes.Buy, 50, 20M, 1000M),
                 new TradeTransaction(DateTime.Today.AddMonths(-9), "ABC", TradeTypes.Buy, 50, 20M, 2000M),
@@ -145,7 +145,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellTradeWithDiscount()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransaction(new TradeTransaction(DateTime.Today.AddMonths(-13), "ABC", TradeTypes.Buy, 123, 20M, 2000M));
             portfolio.AddTransaction(new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Sell, 123, 20M, 2200M));
 
@@ -161,7 +161,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellFIFOLessWithDiscount()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransactions(new List<Transaction> {
                 new TradeTransaction(DateTime.Today.AddMonths(-14), "ABC", TradeTypes.Buy, 50, 20M, 1000M),
                 new TradeTransaction(DateTime.Today.AddMonths(-10), "ABC", TradeTypes.Buy, 50, 20M, 2000M),
@@ -180,7 +180,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellFIFOMoreWithDiscount()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransactions(new List<Transaction> {
                 new TradeTransaction(DateTime.Today.AddMonths(-14), "ABC", TradeTypes.Buy, 50, 20M, 1000M),
                 new TradeTransaction(DateTime.Today.AddMonths(-9), "ABC", TradeTypes.Buy, 50, 20M, 1500M),
@@ -203,7 +203,7 @@ namespace Portfolio.Model.Tests
         [TestMethod]
         public void CanSellTradeThenBuy()
         {
-            var portfolio = new Portfolio("Test");
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
             portfolio.AddTransactions(new List<Transaction> {
                 new TradeTransaction(DateTime.Today.AddDays(-5), "ABC", TradeTypes.Sell, 50, 20M, 600M),
                 new TradeTransaction(DateTime.Today, "ABC", TradeTypes.Buy, 100, 20M, 1000M)

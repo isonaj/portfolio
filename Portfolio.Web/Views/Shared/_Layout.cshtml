@@ -26,12 +26,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-page="/Index" class="navbar-brand">Portfolio.Web</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Portfolio.Web</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-page="/Index">Home</a></li>
-                    <li><a asp-page="/Portfolios">Portfolios</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Portfolio" asp-action="Index">Portfolios</a></li>
                 </ul>
             </div>
         </div>
@@ -40,7 +40,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2017 - Portfolio.Web</p>
+            <p>&copy; 2018 - Portfolio.Web</p>
         </footer>
     </div>
 

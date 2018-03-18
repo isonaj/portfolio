@@ -17,7 +17,7 @@ namespace Portfolio.Data.Repositories
 
         public Model.Portfolio Get(Guid id)
         {
-            throw new NotImplementedException();
+            return _db.Portfolios.Where(p => p.Id == id).SingleOrDefault();
         }
 
         public IEnumerable<Model.Portfolio> GetAll()
@@ -27,7 +27,8 @@ namespace Portfolio.Data.Repositories
 
         public void Save(Model.Portfolio entity)
         {
-            throw new NotImplementedException();
+            _db.Add(entity);
+            _db.SaveChanges();
         }
     }
 }

@@ -1,0 +1,76 @@
+﻿@model Portfolio.Model.Portfolio
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Portfolio</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+
+    <h3>Holdings</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Units</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var summ in Model.Summaries)
+            {
+                <tr>
+                    <td>summ.Code</td>
+                    <td>summ.Units</td>
+                    <td>summ.Cost</td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+    <h3>Trades</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Date</th>
+                <th>Units</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var summ in Model.Summaries)
+            {
+                @foreach (var trade in summ.Trades)
+                {
+            <tr>
+                <td>summ.Code</td>
+                <td>trade.Units</td>
+                <td>trade.BuyDate.ToString("dd/mm/yyyy")</td>
+                <td>trade.BuyAmount</td>
+                <td>trade.SellDate.ToString("dd/mm/yyyy")</td>
+                <td>trade.SellAmount</td>
+                <td>trade.Profit</td>
+                <td>trade.IsDiscounted</td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
