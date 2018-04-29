@@ -1,4 +1,5 @@
-﻿using Portfolio.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Portfolio.Model;
 using Portfolio.Model.Repositories;
 using System;
 using System.Collections.Generic;
@@ -17,17 +18,21 @@ namespace Portfolio.Data.Repositories
 
         public Model.Portfolio Get(Guid id)
         {
-            return _db.Portfolios.Where(p => p.Id == id).SingleOrDefault();
+            return _db.Portfolios.Include("Transactions")
+                .Where(p => p.Id == id)
+                .SingleOrDefault();
         }
 
         public IEnumerable<Model.Portfolio> GetAll()
         {
-            return _db.Portfolios.ToList();
+            return _db.Portfolios.Include("Transactions")
+                .ToList();
         }
 
         public void Save(Model.Portfolio entity)
         {
-            _db.Add(entity);
+            //_db.Add(entity);
+            _db.Entry(entity).State = EntityState.Modified;
             _db.SaveChanges();
         }
     }

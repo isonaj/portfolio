@@ -26,7 +26,7 @@ namespace Portfolio.Web.Tests.Services
                 var txn = transactions.First();
                 Assert.AreEqual("WLE", txn.Code);
                 Assert.AreEqual(new DateTime(2017, 11, 6), txn.Date);
-                Assert.AreEqual(TradeTypes.Buy, txn.Type);
+                Assert.AreEqual(TransactionTypes.Buy, txn.Type);
                 Assert.AreEqual(862, txn.Units);
                 Assert.AreEqual(1009.92M, txn.Total);
                 Assert.AreEqual(10M, txn.Fees);

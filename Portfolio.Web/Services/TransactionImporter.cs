@@ -9,9 +9,9 @@ namespace Portfolio.Web.Services
 {
     public class TransactionImporter
     {
-        public IEnumerable<TradeTransaction> LoadTransactions(Stream stream)
+        public IEnumerable<Transaction> LoadTransactions(Stream stream)
         {
-            var result =  new List<TradeTransaction>();
+            var result =  new List<Transaction>();
             using (var reader = new StreamReader(stream))
             {
                 // Read and ignore first row
@@ -24,7 +24,7 @@ namespace Portfolio.Web.Services
                         var tokens = line.Split(',');
                         if (tokens.Length == 12)
                         {
-                            var txn = new TradeTransaction(DateTime.Parse(tokens[2]), tokens[4], tokens[3] == "B" ? TradeTypes.Buy : TradeTypes.Sell, Convert.ToInt32(tokens[5]), Convert.ToDecimal(tokens[7]), Convert.ToDecimal(tokens[8]));
+                            var txn = new Transaction(DateTime.Parse(tokens[2]), tokens[4], tokens[3] == "B" ? TransactionTypes.Buy : TransactionTypes.Sell, Convert.ToInt32(tokens[5]), Convert.ToDecimal(tokens[7]), Convert.ToDecimal(tokens[8]));
                             result.Add(txn);
                         }
 

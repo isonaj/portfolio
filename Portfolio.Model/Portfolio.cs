@@ -35,7 +35,7 @@ namespace Portfolio.Model
             GenerateSummary();
         }
 
-        void GenerateSummary()
+        public void GenerateSummary()
         {
             _summaries = new List<PortfolioSummary>();
             foreach (var txn in _txns.OrderBy(t => t.Date))

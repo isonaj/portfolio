@@ -27,6 +27,7 @@ namespace Portfolio.Web.Controllers
         public ActionResult Details(Guid id)
         {
             var portfolio = _repo.Get(id);
+            portfolio.GenerateSummary();
             return View(portfolio);
         }
 
