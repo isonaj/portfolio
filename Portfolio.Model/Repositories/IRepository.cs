@@ -9,5 +9,7 @@ namespace Portfolio.Model.Repositories
         IEnumerable<T> GetAll();
         T Get(Guid id);
         void Save(T entity);
+        void Create(T entity);
+        void Delete(Guid id);
     }
 }

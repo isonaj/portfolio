@@ -49,7 +49,7 @@ namespace Portfolio.Web.Controllers
                     }
                 }
             }
-            return Ok();
+            return RedirectToAction("Index", new { portfolioId });
         }
     }
 }

@@ -44,8 +44,8 @@ namespace Portfolio.Web.Controllers
         {
             try
             {
-                var portfolio = new Model.Portfolio(new Guid(collection["Id"]), collection["Name"]);
-                _repo.Save(portfolio);
+                var portfolio = new Model.Portfolio(Guid.NewGuid(), collection["Name"]);
+                _repo.Create(portfolio);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -87,11 +87,12 @@ namespace Portfolio.Web.Controllers
         // POST: Portfolio/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
+                _repo.Delete(id);
 
                 return RedirectToAction(nameof(Index));
             }

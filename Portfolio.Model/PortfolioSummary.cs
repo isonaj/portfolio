@@ -93,13 +93,13 @@ namespace Portfolio.Model
                     {
                         // Partial sell
                         tmpUnits = units;
-                        tmpCost = h.Cost * units / h.Units;
+                        tmpCost = Math.Round(h.Cost * units / h.Units, 2);
                         newHold.Add(new SummaryHolding(h.Date, h.Units - units, h.Cost - tmpCost));
                     }
 
                     if (tmpUnits > 0)
                     {
-                        var tmpAmount = tmpUnits * amount / units;
+                        var tmpAmount = Math.Round(tmpUnits * amount / units, 2);
                         _trades.Add(new MatchedTrade(Code, tmpUnits, h.Date, tmpCost, date, tmpAmount));
                         amount -= tmpAmount;
                     }

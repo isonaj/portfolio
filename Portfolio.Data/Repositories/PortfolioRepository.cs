@@ -29,10 +29,22 @@ namespace Portfolio.Data.Repositories
                 .ToList();
         }
 
+        public void Create(Model.Portfolio entity)
+        {
+            _db.Add(entity);
+            _db.SaveChanges();
+        }
+
         public void Save(Model.Portfolio entity)
         {
-            //_db.Add(entity);
             _db.Entry(entity).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
+
+        public void Delete(Guid id)
+        {
+            var portfolio = _db.Portfolios.Where(p => p.Id == id).SingleOrDefault();
+            _db.Portfolios.Remove(portfolio);
             _db.SaveChanges();
         }
     }

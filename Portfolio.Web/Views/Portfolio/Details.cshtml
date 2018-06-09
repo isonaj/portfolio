@@ -28,7 +28,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var summ in Model.Summaries.Where(s=> s.Units != 0).OrderBy(s => s.Code))
+            @foreach (var summ in Model.Summaries.Where(s => s.Units != 0).OrderBy(s => s.Code))
             {
                 <tr>
                     <td>@summ.Code</td>
@@ -36,6 +36,30 @@
                     <td>@summ.Cost</td>
                 </tr>
 
+            }
+        </tbody>
+    </table>
+
+    <h3>Capital Gains</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Capital Gains</th>
+                <th>Discounted Gains</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var summ in Model.Summaries.SelectMany(s => s.Trades)
+                .GroupBy(t => t.SellDate.AddMonths(6).Year)
+                .OrderBy(t => t.Key)
+                .Select(cgt => new { Year = cgt.Key, Gain = cgt.Where(o => !o.IsDiscounted).Sum(o => o.Profit), DiscountedGain = cgt.Where(o => o.IsDiscounted).Sum(o => o.Profit) }))
+            {
+                <tr>
+                    <td>@summ.Year</td>
+                    <td>@summ.Gain</td>
+                    <td>@summ.DiscountedGain</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -55,21 +79,18 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var summ in Model.Summaries.OrderBy(s => s.Code))
+            @foreach (var trade in Model.Summaries.SelectMany(s => s.Trades).OrderByDescending(t => t.SellDate))
             {
-                @foreach (var trade in summ.Trades.OrderBy(t => t.SellDate))
-                {
-            <tr>
-                <td>@summ.Code</td>
-                <td>@trade.Units</td>
-                <td>@trade.BuyDate.ToString("dd/MM/yyyy")</td>
-                <td>@trade.BuyAmount</td>
-                <td>@trade.SellDate.ToString("dd/MM/yyyy")</td>
-                <td>@trade.SellAmount</td>
-                <td>@trade.Profit</td>
-                <td>@trade.IsDiscounted</td>
-            </tr>
-                }
+                <tr>
+                    <td>@trade.Code</td>
+                    <td>@trade.Units</td>
+                    <td>@trade.BuyDate.ToString("dd/MM/yyyy")</td>
+                    <td>@trade.BuyAmount</td>
+                    <td>@trade.SellDate.ToString("dd/MM/yyyy")</td>
+                    <td>@trade.SellAmount</td>
+                    <td>@trade.Profit</td>
+                    <td>@trade.IsDiscounted</td>
+                </tr>
             }
         </tbody>
     </table>
