@@ -23,8 +23,8 @@
         <thead>
             <tr>
                 <th>Code</th>
-                <th>Units</th>
-                <th>Cost</th>
+                <th class="text-right">Units</th>
+                <th class="text-right">Cost</th>
             </tr>
         </thead>
         <tbody>
@@ -32,8 +32,8 @@
             {
                 <tr>
                     <td>@summ.Code</td>
-                    <td>@summ.Units</td>
-                    <td>@summ.Cost</td>
+                    <td class="text-right">@summ.Units</td>
+                    <td class="text-right">@summ.Cost</td>
                 </tr>
 
             }
@@ -45,8 +45,8 @@
         <thead>
             <tr>
                 <th>Year</th>
-                <th>Capital Gains</th>
-                <th>Discounted Gains</th>
+                <th class="text-right">Capital Gains</th>
+                <th class="text-right">Discounted Gains</th>
             </tr>
         </thead>
         <tbody>
@@ -57,8 +57,8 @@
             {
                 <tr>
                     <td>@summ.Year</td>
-                    <td>@summ.Gain</td>
-                    <td>@summ.DiscountedGain</td>
+                    <td class="text-right">@summ.Gain</td>
+                    <td class="text-right">@summ.DiscountedGain</td>
                 </tr>
             }
         </tbody>
@@ -69,12 +69,12 @@
         <thead>
             <tr>
                 <th>Code</th>
-                <th>Units</th>
+                <th class="text-right">Units</th>
                 <th>Buy Date</th>
-                <th>Buy Amount</th>
+                <th class="text-right">Buy Amount</th>
                 <th>Sell Date</th>
-                <th>Sell Amount</th>
-                <th>Profit</th>
+                <th class="text-right">Sell Amount</th>
+                <th class="text-right">Profit</th>
                 <th>Discounted</th>
             </tr>
         </thead>
@@ -83,12 +83,12 @@
             {
                 <tr>
                     <td>@trade.Code</td>
-                    <td>@trade.Units</td>
+                    <td class="text-right">@trade.Units</td>
                     <td>@trade.BuyDate.ToString("dd/MM/yyyy")</td>
-                    <td>@trade.BuyAmount</td>
+                    <td class="text-right">@trade.BuyAmount</td>
                     <td>@trade.SellDate.ToString("dd/MM/yyyy")</td>
-                    <td>@trade.SellAmount</td>
-                    <td>@trade.Profit</td>
+                    <td class="text-right">@trade.SellAmount</td>
+                    <td class="text-right">@trade.Profit</td>
                     <td>@trade.IsDiscounted</td>
                 </tr>
             }
