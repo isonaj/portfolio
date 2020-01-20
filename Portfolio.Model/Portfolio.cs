@@ -40,14 +40,26 @@ namespace Portfolio.Model
             _summaries = new List<PortfolioSummary>();
             foreach (var txn in _txns.OrderBy(t => t.Date))
             {
-                var summary = _summaries.Where(s => s.Code == txn.Code).SingleOrDefault();
+                var summary = _summaries
+                    .Where(s => s.Code == txn.Code)
+                    .SingleOrDefault();
                 if (summary == null)
                 {
                     summary = new PortfolioSummary { Code = txn.Code };
                     _summaries.Add(summary);
                 }
-                txn.GenerateSummary(ref summary);
+                summary.ApplyTransaction(txn);
             }
+        }
+
+        public void AddStockQuote(StockQuote stockQuote)
+        {
+            var summary = _summaries
+                .Where(s => s.Code == stockQuote.Code)
+                .SingleOrDefault();
+
+            summary.MarketValue = summary.Units * stockQuote.Close;
+            summary.UnrealisedGain = summary.MarketValue - summary.Cost;
         }
     }
 }

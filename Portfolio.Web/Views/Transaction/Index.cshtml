@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-condensed">
     <thead>
         <tr>
             <th>
@@ -21,19 +21,19 @@
             <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
-            <th>
+            <th class="text-right">
                 @Html.DisplayNameFor(model => model.Units)
             </th>
-            <th>
+            <th class="text-right">
                 @Html.DisplayNameFor(model => model.Fees)
             </th>
-            <th>
+            <th class="text-right">
                 @Html.DisplayNameFor(model => model.Total)
             </th>
-            <th>
+            <th class="text-right">
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            <th>
+            <th class="text-right">
                 @Html.DisplayNameFor(model => model.Amount)
             </th>
             <th></th>
@@ -51,19 +51,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
-            <td>
+            <td class="text-right">
                 @Html.DisplayFor(modelItem => item.Units)
             </td>
-            <td>
+            <td class="text-right">
                 @Html.DisplayFor(modelItem => item.Fees)
             </td>
-            <td>
+            <td class="text-right">
                 @Html.DisplayFor(modelItem => item.Total)
             </td>
-            <td>
+            <td class="text-right">
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            <td>
+            <td class="text-right">
                 @Html.DisplayFor(modelItem => item.Amount)
             </td>
             <td>

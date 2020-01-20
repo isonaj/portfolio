@@ -218,5 +218,26 @@ namespace Portfolio.Model.Tests
             Assert.AreEqual(0M, summ.DiscountedRealisedGain);
             Assert.AreEqual(100M, summ.RealisedGain);
         }
+
+        [TestMethod]
+        public void CanCalculateUnrealisedProfit()
+        {
+            var portfolio = new Portfolio(Guid.NewGuid(), "Test");
+            portfolio.AddTransaction(new Transaction(
+                DateTime.Today,
+                "ABC",
+                TransactionTypes.Buy,
+                100,
+                20M,
+                1000M));
+            portfolio.AddStockQuote(new StockQuote("ABC", DateTime.Today, null, null, null, 11, 0));
+
+            Assert.AreEqual(1, portfolio.Summaries.Count());
+            var summ = portfolio.Summaries.First();
+            Assert.AreEqual("ABC", summ.Code);
+            Assert.AreEqual(100, summ.Units);
+            Assert.AreEqual(1100M, summ.MarketValue);
+            Assert.AreEqual(100M, summ.UnrealisedGain);
+        }
     }
 }

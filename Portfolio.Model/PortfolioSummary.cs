@@ -31,6 +31,22 @@ namespace Portfolio.Model
 
         public IEnumerable<MatchedTrade> Trades { get { return _trades; } }
 
+        public decimal MarketValue { get; set; }
+        public decimal UnrealisedGain { get; set; }
+
+        public void ApplyTransaction(Transaction txn)
+        {
+            switch (txn.Type)
+            {
+                case TransactionTypes.Buy:
+                    AddHolding(txn.Date, txn.Units, txn.Total);
+                    break;
+                case TransactionTypes.Sell:
+                    SellHolding(txn.Date, txn.Units, txn.Total);
+                    break;
+            }
+        }
+
         public void AddHolding(DateTime date, int units, decimal amount)
         {
             if (Units >= 0)
