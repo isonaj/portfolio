@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using Portfolio.Model;
+using Portfolio.Data.Configurations;
 
 namespace Portfolio.Data
 {
@@ -12,8 +13,11 @@ namespace Portfolio.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Model.Portfolio>().HasKey(o => o.Id);
-            modelBuilder.Entity<Model.Portfolio>().Ignore(o => o.Summaries);
+            //modelBuilder.Entity<Model.Portfolio>().HasKey(o => o.Id);
+            //modelBuilder.Entity<Model.Portfolio>().Ignore(o => o.Summaries);
+
+            modelBuilder.ApplyConfiguration(new PortfolioConfiguration());
+            modelBuilder.ApplyConfiguration(new StockQuoteConfiguration());
         }
     }
 }

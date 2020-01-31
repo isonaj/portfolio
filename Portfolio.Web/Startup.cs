@@ -37,7 +37,7 @@ namespace Portfolio.Web
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -46,10 +46,17 @@ namespace Portfolio.Web
             }
 
             app.UseStaticFiles();
+            app.UseRouting();
 
+            /*
             app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
+            */
+            app.UseEndpoints(routes =>
+            {
+                routes.MapDefaultControllerRoute();
             });
         }
     }

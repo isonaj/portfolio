@@ -25,16 +25,20 @@
                 <th>Code</th>
                 <th class="text-right">Units</th>
                 <th class="text-right">Cost</th>
+                <th class="text-right">Value</th>
+                <th class="text-right">Profit</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var summ in Model.Summaries.Where(s => s.Units != 0).OrderBy(s => s.Code))
             {
-                <tr>
-                    <td>@summ.Code</td>
-                    <td class="text-right">@summ.Units</td>
-                    <td class="text-right">@summ.Cost</td>
-                </tr>
+            <tr>
+                <td>@summ.Code</td>
+                <td class="text-right">@summ.Units</td>
+                <td class="text-right">@summ.Cost</td>
+                <td class="text-right">@summ.MarketValue</td>
+                <td class="text-right">@summ.UnrealisedGain</td>
+            </tr>
 
             }
         </tbody>
@@ -53,7 +57,12 @@
             @foreach (var summ in Model.Summaries.SelectMany(s => s.Trades)
                 .GroupBy(t => t.SellDate.AddMonths(6).Year)
                 .OrderBy(t => t.Key)
-                .Select(cgt => new { Year = cgt.Key, Gain = cgt.Where(o => !o.IsDiscounted).Sum(o => o.Profit), DiscountedGain = cgt.Where(o => o.IsDiscounted).Sum(o => o.Profit) }))
+                .Select(cgt => new 
+                { 
+                    Year = cgt.Key, 
+                    Gain = cgt.Where(o => !o.IsDiscounted).Sum(o => o.Profit), 
+                    DiscountedGain = cgt.Where(o => o.IsDiscounted).Sum(o => o.Profit) 
+                }))
             {
                 <tr>
                     <td>@summ.Year</td>

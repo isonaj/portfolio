@@ -6,7 +6,6 @@ namespace Portfolio.Model
 {
     public class StockQuote
     {
-        public int Id { get; set; }
         public string Code { get; private set; }
         public DateTime Date { get; private set; }
         public decimal? Open { get; private set; }

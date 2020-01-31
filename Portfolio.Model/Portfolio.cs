@@ -58,8 +58,11 @@ namespace Portfolio.Model
                 .Where(s => s.Code == stockQuote.Code)
                 .SingleOrDefault();
 
-            summary.MarketValue = summary.Units * stockQuote.Close;
-            summary.UnrealisedGain = summary.MarketValue - summary.Cost;
+            if (summary != null)
+            {
+                summary.MarketValue = summary.Units * stockQuote.Close;
+                summary.UnrealisedGain = summary.MarketValue - summary.Cost;
+            }
         }
     }
 }
