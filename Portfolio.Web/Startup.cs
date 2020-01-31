@@ -9,7 +9,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Portfolio.Data;
 using Portfolio.Data.Repositories;
-using Portfolio.Model.Repositories;
+using Portfolio.Application.Data;
+using MediatR;
+using System.Reflection;
+using Portfolio.Application.Portfolio;
 
 namespace Portfolio.Web
 {
@@ -29,7 +32,8 @@ namespace Portfolio.Web
             services.AddDbContext<PortfolioDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped(typeof(IRepository<Model.Portfolio>), typeof(PortfolioRepository)); 
+            services.AddScoped(typeof(IRepository<Model.Portfolio>), typeof(PortfolioRepository));
+            services.AddMediatR(typeof(GetPortfolios).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,12 +52,6 @@ namespace Portfolio.Web
             app.UseStaticFiles();
             app.UseRouting();
 
-            /*
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
-            */
             app.UseEndpoints(routes =>
             {
                 routes.MapDefaultControllerRoute();

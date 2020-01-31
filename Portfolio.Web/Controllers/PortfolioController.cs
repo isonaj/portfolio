@@ -2,32 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Portfolio.Model.Repositories;
+using Portfolio.Application.Portfolio;
+using Portfolio.Application.Data;
 
 namespace Portfolio.Web.Controllers
 {
     public class PortfolioController : Controller
     {
-        IRepository<Model.Portfolio> _repo;
-        public PortfolioController(IRepository<Model.Portfolio> repo)
+        IMediator _mediator;
+        public PortfolioController(IMediator mediator)
         {
-            _repo = repo;
+            _mediator = mediator;
         }
 
         // GET: Portfolio
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            var portfolios = _repo.GetAll();
+            var portfolios = await _mediator.Send(new GetPortfolios()); 
             return View(portfolios);
         }
 
         // GET: Portfolio/Details/5
-        public ActionResult Details(Guid id)
+        public async Task<ActionResult> Details(Guid id)
         {
-            var portfolio = _repo.Get(id);
-            portfolio.GenerateSummary();
+            var portfolio = await _mediator.Send(new GetPortfolio(id));
             return View(portfolio);
         }
 
@@ -40,12 +41,11 @@ namespace Portfolio.Web.Controllers
         // POST: Portfolio/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
-                var portfolio = new Model.Portfolio(Guid.NewGuid(), collection["Name"]);
-                _repo.Create(portfolio);
+                await _mediator.Send(new CreatePortfolio(Guid.NewGuid(), collection["Name"]));
 
                 return RedirectToAction(nameof(Index));
             }
@@ -92,7 +92,7 @@ namespace Portfolio.Web.Controllers
             try
             {
                 // TODO: Add delete logic here
-                _repo.Delete(id);
+                _mediator.Send(new DeletePortfolio(id));
 
                 return RedirectToAction(nameof(Index));
             }

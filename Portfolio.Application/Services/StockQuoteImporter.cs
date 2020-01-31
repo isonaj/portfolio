@@ -5,13 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Portfolio.Web.Services
+namespace Portfolio.Application.Services
 {
     public class StockQuoteImporter
     {
-        public IEnumerable<StockQuote> LoadStockQuotes(Stream stream)
+        public IEnumerable<Model.StockQuote> LoadStockQuotes(Stream stream)
         {
-            var result =  new List<StockQuote>();
+            var result =  new List<Model.StockQuote>();
             using (var reader = new StreamReader(stream))
             {
                 var line = reader.ReadLine();
@@ -20,7 +20,7 @@ namespace Portfolio.Web.Services
                     var tokens = line.Split(',');
                     if (tokens.Length == 7)
                     {
-                        var quote = new StockQuote(
+                        var quote = new Model.StockQuote(
                             tokens[0], 
                             ConvertToDate(tokens[1]), 
                             Convert.ToDecimal(tokens[2]), 

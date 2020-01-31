@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Portfolio.Model;
-using Portfolio.Model.Repositories;
+using Portfolio.Application.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Portfolio.Data.Repositories
 {
@@ -16,36 +15,36 @@ namespace Portfolio.Data.Repositories
             _db = db;
         }
 
-        public Model.Portfolio Get(Guid id)
+        public async Task<Model.Portfolio> Get(Guid id)
         {
-            return _db.Portfolios.Include("Transactions")
+            return await _db.Portfolios.Include("Transactions")
                 .Where(p => p.Id == id)
-                .SingleOrDefault();
+                .SingleOrDefaultAsync();
         }
 
-        public IEnumerable<Model.Portfolio> GetAll()
+        public async Task<IEnumerable<Model.Portfolio>> GetAll()
         {
-            return _db.Portfolios.Include("Transactions")
-                .ToList();
+            return await _db.Portfolios.Include("Transactions")
+                .ToListAsync();
         }
 
-        public void Create(Model.Portfolio entity)
+        public async Task Create(Model.Portfolio entity)
         {
             _db.Add(entity);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
 
-        public void Save(Model.Portfolio entity)
+        public async Task Save(Model.Portfolio entity)
         {
             _db.Entry(entity).State = EntityState.Modified;
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
 
-        public void Delete(Guid id)
+        public async Task Delete(Guid id)
         {
-            var portfolio = _db.Portfolios.Where(p => p.Id == id).SingleOrDefault();
+            var portfolio = await _db.Portfolios.Where(p => p.Id == id).SingleOrDefaultAsync();
             _db.Portfolios.Remove(portfolio);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
         }
     }
 }
