@@ -6,7 +6,6 @@ using System.Text;
 
 namespace Portfolio.Data
 {
-    /*
     public class PortfolioDbContextFactory : IDesignTimeDbContextFactory<PortfolioDbContext>
     {
         public PortfolioDbContext CreateDbContext(string[] args)
@@ -17,5 +16,4 @@ namespace Portfolio.Data
             return new PortfolioDbContext(optionsBuilder.Options);
         }
     }
-    */
 }

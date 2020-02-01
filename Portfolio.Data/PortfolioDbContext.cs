@@ -8,6 +8,7 @@ namespace Portfolio.Data
     public class PortfolioDbContext : DbContext
     {
         public DbSet<Model.Portfolio> Portfolios { get; set; }
+        public DbSet<StockQuote> StockQuotes { get; set; }
 
         public PortfolioDbContext(DbContextOptions<PortfolioDbContext> options) : base(options) { }
 

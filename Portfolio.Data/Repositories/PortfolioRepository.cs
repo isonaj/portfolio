@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Portfolio.Data.Repositories
 {
-    public class PortfolioRepository : IRepository<Model.Portfolio>
+    public class PortfolioRepository : IPortfolioRepository
     {
         PortfolioDbContext _db;
         public PortfolioRepository(PortfolioDbContext db)

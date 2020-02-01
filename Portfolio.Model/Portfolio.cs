@@ -61,7 +61,6 @@ namespace Portfolio.Model
             if (summary != null)
             {
                 summary.MarketValue = summary.Units * stockQuote.Close;
-                summary.UnrealisedGain = summary.MarketValue - summary.Cost;
             }
         }
     }

@@ -31,8 +31,9 @@ namespace Portfolio.Application.StockQuote
                 var importer = new StockQuoteImporter();
                 var quotes = importer.LoadStockQuotes(request.Stream);
 
-                //var repo = _uow.Repository<Model.StockQuote>();
-
+                var repo = _uow.Repository<Model.StockQuote>();
+                foreach (var quote in quotes)
+                    repo.Add(quote);
                 await _uow.SaveChanges();
 
                 return Unit.Value;

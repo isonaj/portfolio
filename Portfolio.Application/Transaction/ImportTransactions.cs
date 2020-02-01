@@ -22,8 +22,8 @@ namespace Portfolio.Application.Transaction
 
         public class ImportTransactionsHandler : IRequestHandler<ImportStockQuotes>
         {
-            private readonly IRepository<Model.Portfolio> _repo;
-            public ImportTransactionsHandler(IRepository<Model.Portfolio> repo)
+            private readonly IPortfolioRepository _repo;
+            public ImportTransactionsHandler(IPortfolioRepository repo)
             {
                 _repo = repo;
             }

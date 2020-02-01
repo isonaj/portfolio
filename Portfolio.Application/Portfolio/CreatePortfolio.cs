@@ -20,8 +20,8 @@ namespace Portfolio.Application.Portfolio
 
         public class CreatePortfolioHandler : IRequestHandler<CreatePortfolio>
         {
-            private readonly IRepository<Model.Portfolio> _repo;
-            public CreatePortfolioHandler(IRepository<Model.Portfolio> repo)
+            private readonly IPortfolioRepository _repo;
+            public CreatePortfolioHandler(IPortfolioRepository repo)
             {
                 _repo = repo;
             }

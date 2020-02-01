@@ -18,8 +18,8 @@ namespace Portfolio.Application.Portfolio
 
         public class DeletePortfolioHandler : IRequestHandler<DeletePortfolio>
         {
-            private readonly IRepository<Model.Portfolio> _repo;
-            public DeletePortfolioHandler(IRepository<Model.Portfolio> repo)
+            private readonly IPortfolioRepository _repo;
+            public DeletePortfolioHandler(IPortfolioRepository repo)
             {
                 _repo = repo;
             }

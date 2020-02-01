@@ -1,17 +1,15 @@
 ﻿using Portfolio.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Portfolio.Application.Data
 {
-    public interface IRepository<T> where T : Entity
+    public interface IRepository<T> where T: class
     {
-        Task<IEnumerable<T>> GetAll();
-        Task<T> Get(Guid id);
-        Task Save(T entity);
-        Task Create(T entity);
-        Task Delete(Guid id);
+        void Add(T obj);
+        IQueryable<T> AsQueryable();
     }
 }

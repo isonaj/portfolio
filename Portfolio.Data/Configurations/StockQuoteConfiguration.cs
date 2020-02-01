@@ -12,6 +12,9 @@ namespace Portfolio.Data.Configurations
         public void Configure(EntityTypeBuilder<StockQuote> builder)
         {
             builder.HasKey(p => new { p.Code, p.Date });
+
+            builder.HasIndex(p => p.Date)
+                .HasName("IDX_Date");
         }
     }
 }

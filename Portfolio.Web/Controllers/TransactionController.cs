@@ -15,11 +15,9 @@ namespace Portfolio.Web.Controllers
     [Route("api/Transactions")]
     public class TransactionController : Controller
     {
-        IRepository<Model.Portfolio> _repo;
         IMediator _mediator;
-        public TransactionController(IMediator mediator, IRepository<Model.Portfolio> repo)
+        public TransactionController(IMediator mediator)
         {
-            _repo = repo;
             _mediator = mediator;
         }
 
@@ -28,6 +26,7 @@ namespace Portfolio.Web.Controllers
         public async Task<IActionResult> Index(Guid portfolioId)
         {
             var p = await _mediator.Send(new GetPortfolio(portfolioId));
+            ViewBag.PortfolioId = portfolioId;
             return View(p.Transactions);
         }
 

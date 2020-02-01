@@ -39,8 +39,15 @@
                 <td class="text-right">@summ.MarketValue</td>
                 <td class="text-right">@summ.UnrealisedGain</td>
             </tr>
-
             }
+            <tr>
+                <td>TOTAL:</td>
+                <td class="text-right"></td>
+                <td class="text-right">@Model.Summaries.Sum(x => x.Cost)</td>
+                <td class="text-right">@Model.Summaries.Sum(x => x.MarketValue)</td>
+                <td class="text-right">@Model.Summaries.Sum(x => x.UnrealisedGain)</td>
+            </tr>
+
         </tbody>
     </table>
 

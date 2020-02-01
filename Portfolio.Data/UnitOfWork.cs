@@ -15,9 +15,9 @@ namespace Portfolio.Data
             _db = db;
         }
 
-        public IRepository<T> Repository<T>() where T : Entity
+        public IRepository<T> Repository<T>() where T: class
         {
-            throw new NotImplementedException();
+            return new Repository<T>(_db);
         }
 
         public async Task SaveChanges()

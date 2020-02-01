@@ -12,8 +12,8 @@ namespace Portfolio.Application.Portfolio
 
         public class GetPortfoliosHandler : IRequestHandler<GetPortfolios, IEnumerable<Model.Portfolio>>
         {
-            private readonly IRepository<Model.Portfolio> _repo;
-            public GetPortfoliosHandler(IRepository<Model.Portfolio> repo)
+            private readonly IPortfolioRepository _repo;
+            public GetPortfoliosHandler(IPortfolioRepository repo)
             {
                 _repo = repo;
             }

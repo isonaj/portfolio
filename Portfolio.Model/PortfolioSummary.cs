@@ -32,7 +32,7 @@ namespace Portfolio.Model
         public IEnumerable<MatchedTrade> Trades { get { return _trades; } }
 
         public decimal MarketValue { get; set; }
-        public decimal UnrealisedGain { get; set; }
+        public decimal UnrealisedGain => MarketValue - Cost;
 
         public void ApplyTransaction(Transaction txn)
         {

@@ -29,10 +29,14 @@ namespace Portfolio.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddDbContext<PortfolioDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<PortfolioDbContext>(options => {
+                options.UseSqlServer(Configuration["ConnectionString"], sqlServerOptions => 
+                    sqlServerOptions.MigrationsAssembly(typeof(PortfolioDbContext).Assembly.Location));
+                });
 
-            services.AddScoped(typeof(IRepository<Model.Portfolio>), typeof(PortfolioRepository));
+
+            services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddMediatR(typeof(GetPortfolios).Assembly);
         }
 

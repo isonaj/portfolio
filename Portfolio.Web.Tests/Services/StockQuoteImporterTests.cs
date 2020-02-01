@@ -33,5 +33,107 @@ namespace Portfolio.Web.Tests.Services
                 Assert.AreEqual(231357, quote.Volume);
             }
         }
+
+        [TestMethod]
+        public void CanLoadFile2()
+        {
+            var file = @"ABC,20200115,2,4,1,3,12345";
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(file)))
+            {
+                var importer = new StockQuoteImporter();
+                var quotes = importer.LoadStockQuotes(stream);
+
+                Assert.AreEqual(1, quotes.Count());
+                var quote = quotes.First();
+                Assert.AreEqual("ABC", quote.Code);
+                Assert.AreEqual(new DateTime(2020, 1, 15), quote.Date);
+                Assert.AreEqual(2M, quote.Open);
+                Assert.AreEqual(4M, quote.High);
+                Assert.AreEqual(1M, quote.Low);
+                Assert.AreEqual(3M, quote.Close);
+                Assert.AreEqual(12345, quote.Volume);
+            }
+        }
+
+        [TestMethod]
+        public void CanLoadBlankOpen()
+        {
+            var file = @"ABC,20200115,,4,1,3,12345";
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(file)))
+            {
+                var importer = new StockQuoteImporter();
+                var quotes = importer.LoadStockQuotes(stream);
+
+                Assert.AreEqual(1, quotes.Count());
+                var quote = quotes.First();
+                Assert.AreEqual("ABC", quote.Code);
+                Assert.AreEqual(new DateTime(2020, 1, 15), quote.Date);
+                Assert.IsFalse(quote.Open.HasValue);
+                Assert.AreEqual(4M, quote.High);
+                Assert.AreEqual(1M, quote.Low);
+                Assert.AreEqual(3M, quote.Close);
+                Assert.AreEqual(12345, quote.Volume);
+            }
+        }
+        [TestMethod]
+        public void CanLoadBlankHigh()
+        {
+            var file = @"ABC,20200115,2,,1,3,12345";
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(file)))
+            {
+                var importer = new StockQuoteImporter();
+                var quotes = importer.LoadStockQuotes(stream);
+
+                Assert.AreEqual(1, quotes.Count());
+                var quote = quotes.First();
+                Assert.AreEqual("ABC", quote.Code);
+                Assert.AreEqual(new DateTime(2020, 1, 15), quote.Date);
+                Assert.AreEqual(2M, quote.Open);
+                Assert.IsFalse(quote.High.HasValue);
+                Assert.AreEqual(1M, quote.Low);
+                Assert.AreEqual(3M, quote.Close);
+                Assert.AreEqual(12345, quote.Volume);
+            }
+        }
+        [TestMethod]
+        public void CanLoadBlankLow()
+        {
+            var file = @"ABC,20200115,2,4,,3,12345";
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(file)))
+            {
+                var importer = new StockQuoteImporter();
+                var quotes = importer.LoadStockQuotes(stream);
+
+                Assert.AreEqual(1, quotes.Count());
+                var quote = quotes.First();
+                Assert.AreEqual("ABC", quote.Code);
+                Assert.AreEqual(new DateTime(2020, 1, 15), quote.Date);
+                Assert.AreEqual(2M, quote.Open);
+                Assert.AreEqual(4M, quote.High);
+                Assert.IsFalse(quote.Low.HasValue);
+                Assert.AreEqual(3M, quote.Close);
+                Assert.AreEqual(12345, quote.Volume);
+            }
+        }
+        [TestMethod]
+        public void CanLoadBlankVolume()
+        {
+            var file = @"ABC,20200115,2,4,1,3,";
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(file)))
+            {
+                var importer = new StockQuoteImporter();
+                var quotes = importer.LoadStockQuotes(stream);
+
+                Assert.AreEqual(1, quotes.Count());
+                var quote = quotes.First();
+                Assert.AreEqual("ABC", quote.Code);
+                Assert.AreEqual(new DateTime(2020, 1, 15), quote.Date);
+                Assert.AreEqual(2M, quote.Open);
+                Assert.AreEqual(4M, quote.High);
+                Assert.AreEqual(1M, quote.Low);
+                Assert.AreEqual(3M, quote.Close);
+                Assert.IsFalse(quote.Volume.HasValue);
+            }
+        }
     }
 }

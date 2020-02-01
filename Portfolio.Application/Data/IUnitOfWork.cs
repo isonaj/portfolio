@@ -5,7 +5,7 @@ namespace Portfolio.Application.Data
 {
     public interface IUnitOfWork
     {
-        IRepository<T> Repository<T>() where T: Entity;
+        IRepository<T> Repository<T>() where T: class;
 
         Task SaveChanges();
     }
