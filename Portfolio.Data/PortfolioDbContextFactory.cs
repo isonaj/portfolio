@@ -11,7 +11,8 @@ namespace Portfolio.Data
         public PortfolioDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<PortfolioDbContext>();
-            optionsBuilder.UseSqlServer("Server=.\\SQL2017;Database=Portfolio;Trusted_Connection=True;MultipleActiveResultSets=true");
+            //optionsBuilder.UseSqlServer("Server=.\\SQL2017;Database=Portfolio;Trusted_Connection=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlite("Data Source=app.db");
 
             return new PortfolioDbContext(optionsBuilder.Options);
         }

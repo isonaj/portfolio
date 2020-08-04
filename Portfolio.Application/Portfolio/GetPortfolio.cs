@@ -35,8 +35,10 @@ namespace Portfolio.Application.Portfolio
                 var repo = _uow.Repository<Model.StockQuote>();
                 var maxDate = repo.AsQueryable()
                     .Select(x => x.Date)
-                    //.DefaultIfEmpty(DateTime.Today)
-                    .Max();
+                    .OrderByDescending(x => x)
+                    .FirstOrDefault();
+                if (maxDate == null)
+                    maxDate = DateTime.Today;
                 var quotes = repo.AsQueryable()
                     .Where(x => x.Date == maxDate)
                     .Select(x => x)

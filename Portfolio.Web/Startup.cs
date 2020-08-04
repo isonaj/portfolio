@@ -29,11 +29,16 @@ namespace Portfolio.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            /*
             services.AddDbContext<PortfolioDbContext>(options => {
                 options.UseSqlServer(Configuration["ConnectionString"], sqlServerOptions => 
                     sqlServerOptions.MigrationsAssembly(typeof(PortfolioDbContext).Assembly.Location));
                 });
-
+            */
+            services.AddDbContext<PortfolioDbContext>(options => {
+                options.UseSqlite(Configuration["SqliteDbConnection"], sqliteOptions =>
+                    sqliteOptions.MigrationsAssembly(typeof(PortfolioDbContext).Assembly.Location));
+            });
 
             services.AddScoped<IPortfolioRepository, PortfolioRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
